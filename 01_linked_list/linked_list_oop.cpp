@@ -2,82 +2,125 @@
 
 using namespace std;
 
-class Node
+struct Node
 {
-private:
     int data;
     Node *next;
-
-public:
-    Node() {}
-    Node(int data, Node *next)
-    {
-        this->data = data;
-        this->next = next;
-    }
-
-    int getData()
-    {
-        return data;
-    }
-
-    void setData(int data)
-    {
-        this->data = data;
-    }
-
-    Node *getNext()
-    {
-        return next;
-    }
-
-    void setNext(Node *next)
-    {
-        this->next = next;
-    }
 };
 
-void printNode(Node *node)
+class List
 {
-    int i = 0;
-    while (node != NULL)
+private:
+    Node *head, *tail;
+
+public:
+    List()
     {
-        cout << "List " << i++ << endl;
-        cout << "Current Addr: " << node;
-        cout << " Next Address: " << node->getNext() << " Data: " << node->getData() << " " << endl;
-        node = node->getNext();
+        head = NULL;
+        tail = NULL;
     }
-    cout << endl;
-}
+
+    Node *getHead()
+    {
+        return head;
+    }
+
+    void createNode(int data)
+    {
+        Node *temp = new Node;
+        temp->data = data;
+        temp->next = NULL;
+        if (head == NULL)
+        {
+            head = temp;
+            tail = temp;
+            temp = NULL;
+        }
+        else
+        {
+            tail->next = temp;
+            tail = temp;
+        }
+    }
+
+    // INSERTION AT START
+    void insertStart(int data)
+    {
+        Node *temp = new Node;
+        temp->data = data;
+        temp->next = head;
+        head = temp;
+    }
+
+    // INSERTION AT PARTICULAR POSITION
+    void insertPostion(int pos, int data)
+    {
+        Node *previousNode = new Node;
+        Node *currentNode = new Node;
+        Node *temp = new Node;
+
+        for (int i = 0; i < pos; i++)
+        {
+            previousNode = currentNode;
+            currentNode = currentNode->next;
+        }
+        temp->data = data;
+        previousNode->next = temp;
+        temp->next = currentNode;
+    }
+
+    // DELETION
+    void deleteFirstNode()
+    {
+        // Node *temp = new Node;
+        // temp = head;
+        head = head->next;
+        // delete temp;
+    }
+
+    void deleteLastNode()
+    {
+        Node *previousNode = new Node;
+        Node *currentNode = new Node;
+
+        currentNode = head;
+        while (currentNode->next != NULL)
+        {
+            previousNode = currentNode;
+            currentNode = currentNode->next;
+        }
+        tail = previousNode;
+        previousNode->next = NULL;
+        delete currentNode;
+    }
+
+    void printNode()
+    {
+        int i = 0;
+        Node *temp = head;
+        while (temp != NULL)
+        {
+            cout << "List " << i++ << endl;
+            cout << "Current Addr: " << temp;
+            cout << " Next Address: " << temp->next << " Data: " << temp->data << " " << endl;
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
 
 int main()
 {
 
-    // allocate these nodes so they gets to store in memory
-    Node *head = new Node();
-    Node *second = new Node();
-    Node *third = new Node();
-    Node *fourth = new Node();
+    List list = List();
+    list.createNode(2);
+    list.createNode(4);
+    list.createNode(6);
+    list.createNode(8);
+    list.createNode(10);
+    list.printNode();
 
-    // head = new Node(2, second);
-    // second = new Node(4, third);
-    // Node *fourth = new Node(8, NULL);
-    // third = new Node(6, fourth);
-    head->setData(2);
-    head->setNext(second);
-
-    second->setData(4);
-    second->setNext(third);
-
-    third->setData(6);
-    third->setNext(fourth);
-
-    fourth->setData(8);
-    fourth->setNext(NULL);
-
-    printNode(head);
-
-    // cout << "head: " << head->getNext() << "\nsecond: " << second;
-
+    list.deleteLastNode();
+    list.printNode();
     return 0;
 }
