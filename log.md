@@ -15,3 +15,9 @@
 **Today's Progress**: implemented insertion and deletion in linked list.
 
 **Thoughts**: Really interesting to work on this topic and especially implementing some logic while inserting or deleting data in particular position.
+
+### Day 1: February 03, 2020 (Stack And Queue)
+
+**Today's Progress**: implemented stack and queue.
+
+**Thoughts**: worked on stack and queue and did operations like push(), pop(), min() etc. stack & enqueue(), dequeue() etc. in queue.
